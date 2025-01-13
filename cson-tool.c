@@ -62,11 +62,15 @@ int	main(int argc, char **argv) {
 	if (strcasecmp(argv[1], "help") == 0 || argc == 1) {
 l_help:
 		// help
-		printf("USAGE cson-tool <arg>[<key>[<value>]]\n"
-			"\tver: version\n"
-			"\thelp: show this\n"
-			"\tget <key> : get value of key (. for wildcard)\r"
-			"\tget <key> : get value as json (. for wildcard)\r"
+		printf("USAGE cson-tool <arg>[<key>[<value>]]\r\n"
+			"\tver: version\r\n"
+			"\thelp: show this\r\n"
+			"\tget <key> : get value of key (. for wildcard)\r\n"
+			"\tgetjson <key> : get value as json (. for wildcard)\r\n"
+			"\tmonitor <key> : monitor key, print value (or object) when changes (. for wildcard)\r\n"
+			"\tmonitorjson <key> : monitor key, print value (or json object) when changes (. for wildcard)\r\n"
+			"\tdel <key> : delete key\r\n"
+			"\tset <key> <value> : create key (or object(s) if necessary) and set value\r\n"
 			"\r\n");
 		goto l0;
 	}
@@ -163,6 +167,20 @@ l_help:
 				cson_saveJson(NULL, key);
 			tss = o->ts;
 		}
+	}
+	if (strcasecmp(argv[1], "del") == 0) {
+		uint64_t	ts = 0, tss = 0;
+		cobj		*o;
+		char		*key;
+
+		if (argc < 3)
+			goto l_help;
+		char	*toset = argv[2];
+				
+		o = cson_find(NULL, toset);
+		if (!o)
+			goto l0;
+		cson_delete(o);
 	}
 l0:
 	return 0;
