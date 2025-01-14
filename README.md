@@ -240,14 +240,118 @@ You can debug using **vscode**, vscode config files are already in **.vscode** f
 ### From C (C++)
 Soon
 #### API Functions
-	```
-	void		cson_sync(void);
+##### GET FUNCTIONS
+	int		cson_getString(cobj *o, const char*key, char *dest, const char*defval);
+	/*	
+		If key exists set dest to value 
+		If not set dest to defval */
 
-	void		cson_syncreset(char *key);
+	int		cson_getStringf(cobj *o, char *dest, const char *defval, const char *fmt, ...);
+	/*	
+		Same as cson_getString and
+		you can use like
+		cson_getStringf(NULL, value, "default", "cameras.%s.streams[%d].uri", "camera1", 1);
+	*/
 
+	int64_t	cson_getInt(cobj *o, const char*key, int64_t defval);
+	/*
+		If key exists and value is number, returns that as int64
+		Otherwise returns defval
+	*/
+
+	int64_t	cson_getIntf(cobj *o, int64_t defval, const char *fmt, ...);
+	/*	
+		Same as cson_getInt and
+		you can use like
+		width = cson_getIntf(NULL, 1920, "cameras.%s.streams[%d].width", "camera1", 1);
+	*/
+
+	
+	int		cson_getBool(cobj *o, const char*key, int defval);
+	/*
+		If value is integer and non zero, returns 1,
+		If value is "true" returns 1
+		Otherwise or value is "false" returns 0 
+		If key not exists returns defval
+	*/
+
+	float		cson_getFloat(cobj *o, const char*key, float defval);
+	/*
+		Returns float value if value is parsable as float,
+		otherwise returns defval
+	*/
+
+##### SET FUNCTIONS
+	
 	int		cson_setfString(cobj *o, const char *val, char *fmt, ...);
 
 	int		cson_setfInt(cobj *o, uint64_t val, char *fmt, ...);
+
+	int		cson_setIntf(cobj *o, int64_t defval, const char *fmt, ...);
+	
+	int		cson_setString(cobj *o, const char*key, const char*val);
+
+	int		cson_setInt(cobj *o, const char*key, int64_t val);
+
+	int		cson_setFloat(cobj *o, const char*key, float val);
+
+	int		cson_setBool(cobj *o, const char*key, int val);
+
+	int		cson_setStringf(cobj *o, const char*key, char *fmt, ...);
+
+##### SEARCH FUNCTIONS	
+
+	cobj		*cson_find(cobj *o, const char*key);
+
+	cobj		*cson_find_child(cobj *o, const char*key);
+
+	cobj		*cson_findf(cobj *o, const char *fmt, ...);
+
+##### SORT AND MATCH FUNCTIONS
+
+	int     	json_name_match(char *t, char *f);
+
+	int     	json_name_scanf(char *text, char *format, ...);
+
+	int		cson_sort(char *name, int (*f)(cobj *, cobj *));
+
+##### ITERATION FUNCTIONS
+
+	cobj		*cson_next(cobj *o);
+
+	cobj		*cson_prev(cobj *o);
+
+	cobj		*cson_first(cobj *o);
+
+	cobj		*cson_last(cobj *o);
+
+##### TIME FUNCTIONS
+
+	uint64_t	ts_monotonic(void);
+
+	uint64_t	startTimer(uint64_t *v);
+
+	uint64_t	checkTimer(uint64_t *v);
+
+	uint64_t	ts_monotonic64(void);
+
+	uint64_t	startTimer64(uint64_t *v);
+
+	uint64_t	checkTimer64(uint64_t *v);
+
+	char		*string_time(time_t t);
+
+	int		current_wday(void);
+
+	int		current_seconds(void);
+
+	char		*current_time(void);
+
+##### FILE AND SYNC FUNCTIONS
+
+	void		cson_sync(void);
+
+	void		cson_syncreset(char *key);
 
 	int		cson_dumpText(char *data, int *l, cobj *obj, uint64_t ts);
 
@@ -265,67 +369,23 @@ Soon
 
 	int		cson_loadText(const char*fname);
 
-	cobj		*cson_find(cobj *o, const char*key);
-
-	cobj		*cson_find_child(cobj *o, const char*key);
-
-	cobj		*cson_next(cobj *o);
-
-	cobj		*cson_prev(cobj *o);
-
-	cobj		*cson_first(cobj *o);
-
-	cobj		*cson_last(cobj *o);
-
-	int		cson_getString(cobj *o, const char*key, char *dest, const char*defval);
-
-	int		cson_getStringf(cobj *o, char *dest, const char *defval, const char *fmt, ...);
-
-	int		cson_setIntf(cobj *o, int64_t defval, const char *fmt, ...);
-
-	int64_t	cson_getIntf(cobj *o, int64_t defval, const char *fmt, ...);
-
-	int64_t	cson_getInt(cobj *o, const char*key, int64_t defval);
-
-	int		cson_getBool(cobj *o, const char*key, int defval);
-
-	float		cson_getFloat(cobj *o, const char*key, float defval);
-
-	int		cson_setString(cobj *o, const char*key, const char*val);
-
-	int		cson_setInt(cobj *o, const char*key, int64_t val);
-
-	int		cson_setFloat(cobj *o, const char*key, float val);
-
-	int		cson_setBool(cobj *o, const char*key, int val);
+	int		cson_loadOrCreateJsonWithDate(const char *fname, int created);
 
 	int		cson_saveJson(const char*fname, const char*key);
 
 	int		cson_saveText(const char *fname, const char *key, uint64_t ts);
 
-	int		cson_setStringf(cobj *o, const char*key, char *fmt, ...);
-
-	char    	*cson_ucase(char *p);
-
-	uint64_t	ts_monotonic(void);
-
-	uint64_t	startTimer(uint64_t *v);
-
-	uint64_t	checkTimer(uint64_t *v);
-
-	cobj		*cson_findf(cobj *o, const char *fmt, ...);
-
 	void		cson_save(char *name);
 
-	void		cson_sync(void);
-
-	char		*string_time(time_t t);
+	void		cson_check(void);
 
 	int		cson_reset(void);
 
-	int		countLines(char *fname);
+##### OTHER FUNCTIONS
 
-	char		*current_time(void);
+	char    	*cson_ucase(char *p);
+
+	int		countLines(char *fname);
 
 	int		write_gpio(int k, int v);
 
@@ -333,26 +393,10 @@ Soon
 
 	int		cson_parseHTTPResponse(const char *data, char *name);
 
-	int		current_wday(void);
 
-	int		current_seconds(void);
 
-	int     	json_name_match(char *t, char *f);
-
-	int     	json_name_scanf(char *text, char *format, ...);
-
-	int		cson_sort(char *name, int (*f)(cobj *, cobj *));
-
-	int		cson_loadOrCreateJsonWithDate(const char *fname, int created);
-
-	uint64_t	ts_monotonic64(void);
-
-	uint64_t	startTimer64(uint64_t *v);
-
-	uint64_t	checkTimer64(uint64_t *v);
-
-	void		cson_check(void);
-	```
+	
+	
 
 Soon, but not too soon
 #### As a shared library
