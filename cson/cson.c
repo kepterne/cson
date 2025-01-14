@@ -1145,54 +1145,6 @@ int	cson_loadOrCreateText(const char *fname) {
 	return 1;
 }
 
-int	cson_checkuykumodu(int uyandirmadakika, const char *uyandirmatarih) {
-	struct  tm 	*t;
-	int		ts;
-	int		uykumodu;
-
-	int		yr, mn, dy, h, m, s;
-	time_t	wakeup_time	= 0;
-	time_t	wakeup_end = 0;
-	time_t	now;
-	
-	if (sscanf(uyandirmatarih, "%u-%u-%uT%u:%u:%u", &yr, &mn, &dy, &h, &m, &s) != 6)
-		goto l1;
-	 
-	time_t	twakeup;
-
-	now = time(NULL);
-	t = localtime(&now);
-	t->tm_year = yr - 1900;
-	t->tm_mon = mn - 1;
-	t->tm_mday = dy;
-	t->tm_hour = h;
-	t->tm_min = m;
-	t->tm_sec = s;
-	twakeup = mktime(t);
-	wakeup_time = twakeup;
-	wakeup_end = twakeup + 60 * uyandirmadakika;
-
-	if (now >= twakeup && now <= wakeup_end) {
-		uykumodu = cson_getInt(NULL, "system.uykuModu", 0); //getuykumodu_eshm();
-		if (uykumodu != 0) {
-			fprintf(stderr, "!!uyanma>> %lu >? %lu >? %lu\r\n", (unsigned long) wakeup_time, (unsigned long) now, (unsigned long) wakeup_end);
-			fflush(stderr);
-			
-			cson_setInt(NULL, "system.uykuModu", 0); //setuykumodu_eshm(0);
-		}
-		return 1;
-	}
-l1:
-	uykumodu = cson_getInt(NULL, "system.uykuModu", 0);  //uykumodu = getuykumodu_eshm();
-	if (uykumodu != 1) {
-		fprintf(stderr, "!!uyanma>> %lu >? %lu >? %lu\r\n", (unsigned long) wakeup_time, (unsigned long) now, (unsigned long) wakeup_end);
-		fflush(stderr);
-	
-		//setuykumodu_eshm(1);
-		cson_setInt(NULL, "system.uykuModu", 1); 
-	}
-	return 0;
-}
 struct sysinfo	__sysinfo;
 
 unsigned long cson_upTime(void) {

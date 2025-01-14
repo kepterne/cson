@@ -9,7 +9,7 @@
 /mnt/udisk/movita/movita/lib			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/../bin/cson-tool_dbg",
-			"args": ["monitor", "deneme5"],
+			"args": [],
 			"stopAtEntry": false,
                   "cwd": "${workspaceFolder}/../bin/",
 			"environment": [],
