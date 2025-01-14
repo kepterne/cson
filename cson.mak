@@ -4,7 +4,7 @@ default: all
 export DEPLOYDIR=/usr/lib
 export BINDIR=/usr/bin
 export LIBVER=1.0.2
-export CC=clang
+export CC=gcc
 export LIBNAME=cson
 
 BOLD=\033[1m\e[1;32m
@@ -31,9 +31,8 @@ CFLAGS= -Wall \
 	-Wno-enum-conversion \
 	-fcommon \
 	-Wno-stringop-truncation \
-	-Wno-unknown-warning-option \
-	-Wno-incompatible-pointer-types-discards-qualifiers \
-	-Wno-unused-but-set-variable
+	-Wno-unused-but-set-variable \
+	-Wno-format-overflow
 	
 CFLAGS_DEBUG = -g  \
 

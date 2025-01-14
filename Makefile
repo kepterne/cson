@@ -4,7 +4,8 @@ BIN=cson-tool
 
 SOURCES = cson-tool.c
 
-LIBS = -lpthread -lm
+LIBS = -lpthread 
+#-lm
 
 include rules.mak
 
