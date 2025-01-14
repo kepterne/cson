@@ -49,6 +49,15 @@ Shared library will be installed **cson.mak** variable **DEPLOYDIR**
 Debug version does not use shared library, it uses sources directly.
 
 You can debug using **vscode**, vscode config files are already in **.vscode** folder
+
+**make shared** only creates shared library
+
+**make clean** clears all
+
+**make release** builds and installs library, and cson-tool
+
+**make debug** creates cson-tool_dbg in bin folder
+
 ## How to use
 ### From shell
 #### cson-tool
