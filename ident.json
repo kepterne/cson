@@ -1,0 +1,10 @@
+{
+	"created" : "2025-01-14 - 10:04:11",
+	"persons" : [
+		{
+			"name" : "Kepterne",
+			"password" : 123,
+			"email" : "kepterne@gmail.com"
+		}
+	]
+}
