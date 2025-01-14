@@ -34,26 +34,26 @@ You can debug using **vscode**, vscode config files are already in **.vscode** f
 ### From shell
 #### cson-tool
 ```
-USAGE cson-tool <arg>[<key>[<value>]]
-        ver: version
-        help: show this
+	USAGE cson-tool <arg>[<key>[<value>]]
+		ver: version
+		help: show this
 
-        get <key> : get value of key (. for wildcard)
-        getjson <key> : get value as json (. for wildcard)
+		get <key> : get value of key (. for wildcard)
+		getjson <key> : get value as json (. for wildcard)
 
-        monitor <key> : monitor key, print value (or object) when changes (. for wildcard)
-        monitorjson <key> : monitor key, print value (or json object) when changes (. for wildcard)
+		monitor <key> : monitor key, print value (or object) when changes (. for wildcard)
+		monitorjson <key> : monitor key, print value (or json object) when changes (. for wildcard)
 
-        del <key> : delete key
-        set <key> <value> : create key (or object(s) if necessary) and set value
+		del <key> : delete key
+		set <key> <value> : create key (or object(s) if necessary) and set value
 
-        loadjson <json file name> : load json file into shm
-        loadtext <name=value type file name> : load text file into shm
+		loadjson <json file name> : load json file into shm
+		loadtext <name=value type file name> : load text file into shm
 
-        service : Forever monitor loaded files, and mirror changes in files to shm, and vice versa
+		service : Forever monitor loaded files, and mirror changes in files to shm, and vice versa
 ```
 1. #### In memory json example 
-	```
+```
 	cson-tool set test.name "kepterne"
 
 	cson-tool set test.address.country Tr
@@ -73,9 +73,9 @@ USAGE cson-tool <arg>[<key>[<value>]]
 			"city" : "Ankara"
 		}
 	}
-	```
+```
 2. #### Create a json file and set values
-	```
+```
 	cson loadjson ident.json
 	"ident" : {
 		"created" : "2025-01-14 - 10:04:11"
@@ -87,9 +87,9 @@ USAGE cson-tool <arg>[<key>[<value>]]
 	{
 	"created":"2025-01-14 - 10:04:11"
 	}
-	```
+```
 	Lets set some values
-	```
+```
 	cson-tool set ident.persons[0].name "Kepterne"
 	cson-tool set ident.persons[0].password "123"
 	cson-tool set ident.persons[0].email "kepterne@gmail.com"
@@ -104,9 +104,9 @@ USAGE cson-tool <arg>[<key>[<value>]]
 			}
 		]
 	}
-	```
+```
 	Lets see if changed are mirrored in the file
-	```
+```
 	cat ident.json 
 	{
 		"created" : "2025-01-14 - 10:04:11",
@@ -118,7 +118,7 @@ USAGE cson-tool <arg>[<key>[<value>]]
 			}
 		]
 	}
-	```
+```
 	If an instance of **cson-tool service** is running in the machine, changes will be applied to files, and changes in the file will be applied to shm in few secs.
 	Otherwise it will take some time. 
 
