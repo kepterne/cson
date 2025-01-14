@@ -1,4 +1,23 @@
 # cson
+## or How I Learned to Stop Worrying and Love the shm
+I am open to all ideas, contrubitions and suggestions.
+
+I hate json, I really really hate it.
+
+I hate oversized, overcomplicated, overused json libraries.
+
+I needed to access settings saved in json file, and if settings changed do some stuff. 
+
+And fill some data in json files (e.g. scan for onvif cameras, and fill a json file with details of these cameras), and in another app display streams from these cameras with a layout stored in a json file. 
+
+This code helped me a lot. I learned a lot from hundreds of github users, so I wanted to give back a little.
+
+Code may be complex and quirky because I am quirky and complex too. If you hate that and want to clean and fix it, be my guest. 
+
+I would love to have a collaborator or two of any kind. 
+
+**I hate json.**
+
 ## What is it
 It is a very simple **c / c++** library to handle json.
 ## Platforms
@@ -121,9 +140,109 @@ You can debug using **vscode**, vscode config files are already in **.vscode** f
 	```
 	If an instance of **cson-tool service** is running in the machine, changes will be applied to files, and changes in the file will be applied to shm in few secs.
 	Otherwise it will take some time. 
+3. #### Create a json file and set values, monitor changes, and see if it mirrors changes made on files to shm, and vice versa
+	First run **cson-tool service** on a seperate terminal window
+	```
+	cson-tool service
+	```
+	Lets create a json file with cson-tool
+	```
+	cson-tool loadjson example.json
+	cson-tool set example.address.city Ankara
+	cson-tool set example.address.country Turkey
+	cson-tool set example.address.gps.lon 32.771245
+	cson-tool set example.address.gps.lat 39.950090
 
+	cson-tool get example
+	created=2025-01-14 - 10:24:39
+	address.city=Ankara
+	address.country=Turkey
+	address.gps.lat=39.950090
+	address.gps.lon=32.771245
+	```
+	While on the previous terminal we run **cson-tool service** we see changes are saved to file(s)
+	```
+	SAVING JSON : /***/*****/******/cson/example.json
+	SAVING JSON : /***/*****/******/cson/example.json
+	```
+	Lets try monitoring the changes from another terminal window
+	```
+	cson-tool monitor example
+	created=2025-01-14 - 10:24:39
+	address.city=Ankara
+	address.country=Turkey
+	address.gps.lat=39.950090
+	address.gps.lon=32.771245
+	```
+	Lets change change a value
+	```
+	cson-tool set example.address.city Istanbul
+	```
+	We will see changes on the monitor window
+	```
+	address.city=Istanbul
+	```
+	We will see changes in the files
+	```
+	cat example.json 
+	{
+		"created" : "2025-01-14 - 10:24:39",
+		"address" : {
+			"city" : "Istanbul",
+			"country" : "Turkey",
+			"gps" : {
+					"lat" : "39.950090",
+					"lon" : "32.771245"
+			}
+		}
+	}
+	```
+	Lets change the file and set city to "antananaviro"
+	We must see in *monitor* window
+	```
+	address.city=Antananaviro
+	```
+	Lets set city to correct value with cson-tool
+	```
+	cson-tool set example.address.city "06 Ankara"
+	```
+	#### CONCLUSION
+	cson library creates a memory structure in shared memory, 
+	all apps using this library can access and change values with simple functions, 
+	create or save json or txt files,
+	monitor changes, iterate objects etc.
+	Details are covered in ***From C*** part. 
+	File details will be stored in ***system*** object.
+	```
+	cson-tool getjson system
+	{
+		"files" : {
+			"deneme" : {
+					"filename" : "/mnt/udisk/movita/cson/deneme.json",
+					"at" : "2025-01-14 - 08:47:38"
+			},
+			"ident" : {
+					"filename" : "/mnt/udisk/movita/cson/ident.json",
+					"at" : "2025-01-14 - 10:07:09"
+			},
+			"example" : {
+					"filename" : "/mnt/udisk/movita/cson/example.json",
+					"at" : "2025-01-14 - 10:37:57"
+			}
+		}
+	}
+	```
+	cson-tool service, checks file dates (a better way is to use inotify mechanism), if files are changed reloads them, if the objects are changed saves them to files.
+
+	It waits a little (e.g. if the object is not changes at least a second), to make sure if mass changes are done, all is finished.
+
+	All object names are **case insensitive**
 ### From C (C++)
+Soon
+#### API Functions
+Soon, but not too soon
 #### As a shared library
+Just add -lcson to your build.
 #### From source
 
 
