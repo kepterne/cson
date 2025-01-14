@@ -413,3 +413,9 @@ Just add -lcson to your build.
 #### From source
 Add jsonparser.c cson.c cobj.c to your project.
 You can use example Makefile used to build cson-tool as an example
+
+# LICENSE
+
+(c) 2025 ekrem.karacan@gmail.com
+
+This code is licensed under MIT license (see LICENSE.txt for details)

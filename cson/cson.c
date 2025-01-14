@@ -1,3 +1,5 @@
+// (c) 2025 ekrem.karacan@gmail.com
+// This code is licensed under MIT license (see LICENSE.txt for details)
 #define	cson_c
 
 #include	<sys/types.h>
