@@ -1,7 +1,7 @@
 {
 	"C_Cpp.default.includePath": [
 		"${workspaceFolder}",
-		"${workspaceFolder}/lib"
+		"${workspaceFolder}/cson"
 	],
 	"files.associations": {
 		"scream_client.h": "c",
