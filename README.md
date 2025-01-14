@@ -53,7 +53,7 @@ You can debug using **vscode**, vscode config files are already in **.vscode** f
 		service : Forever monitor loaded files, and mirror changes in files to shm, and vice versa
 ```
 1. #### In memory json example 
-```
+	```
 	cson-tool set test.name "kepterne"
 
 	cson-tool set test.address.country Tr
@@ -73,9 +73,9 @@ You can debug using **vscode**, vscode config files are already in **.vscode** f
 			"city" : "Ankara"
 		}
 	}
-```
+	```
 2. #### Create a json file and set values
-```
+	```
 	cson loadjson ident.json
 	"ident" : {
 		"created" : "2025-01-14 - 10:04:11"
@@ -87,9 +87,9 @@ You can debug using **vscode**, vscode config files are already in **.vscode** f
 	{
 	"created":"2025-01-14 - 10:04:11"
 	}
-```
+	```
 	Lets set some values
-```
+	```
 	cson-tool set ident.persons[0].name "Kepterne"
 	cson-tool set ident.persons[0].password "123"
 	cson-tool set ident.persons[0].email "kepterne@gmail.com"
@@ -104,9 +104,9 @@ You can debug using **vscode**, vscode config files are already in **.vscode** f
 			}
 		]
 	}
-```
+	```
 	Lets see if changed are mirrored in the file
-```
+	```
 	cat ident.json 
 	{
 		"created" : "2025-01-14 - 10:04:11",
@@ -118,7 +118,7 @@ You can debug using **vscode**, vscode config files are already in **.vscode** f
 			}
 		]
 	}
-```
+	```
 	If an instance of **cson-tool service** is running in the machine, changes will be applied to files, and changes in the file will be applied to shm in few secs.
 	Otherwise it will take some time. 
 
