@@ -45,12 +45,12 @@ deploy_dir:
 	@sudo mkdir -p $(DEPLOYDIR)
 
 debug_dir:
-	@mkdir -p ../debug
+	@mkdir -p ./debug
 
 release_dir:
-	@mkdir -p ../release
+	@mkdir -p ./release
 	
 bin:
-	@mkdir -p ../$@
+	@mkdir -p ./$@
 
  
